@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+<a href=""><h2>Your Profile</h2></a>
+<p>Username: {{ user_profile.user.username }}</p>
+<p>Email: {{ user_profile.user.email }}</p>
+<p>Address: {{ user_profile.address }}</p>
+{% endblock %}

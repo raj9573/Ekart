@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {% block body_block %}
+<h1>Checkout</h1>
+
+<form method="POST" action="#">
+  {% csrf_token %}
+  <!-- Add your checkout form fields here -->
+  <p>Total Amount: {{ total_amount }}</p>
+  {% if total_amount > 0 %}
+  <button type="submit">Place Order</button>
+  {% else %}
+  add items to buy
+  {% endif %}
+</form>
+{% endblock %}

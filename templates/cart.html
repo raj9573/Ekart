@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title> 
+cart</title>
+<style>
+    img{
+        height: 150px;
+        width: 150px;
+
+    }
+</style>
+
+{% endblock %}
+{% block body_block %}
+<h2>Cart</h2>
+<ul>
+    {% for cart_item in cart_items %}
+        <li>
+            <img src="{{ cart_item.product.image.url }}" alt="Not Found">
+            <h3>{{ cart_item.product.name }}</h3>
+            <p>Price: {{ cart_item.product.price }}</p>
+            <p>Quantity: {{ quantity }}</p>
+        </li>
+    {% endfor %}
+</ul>
+<p>Total Amount: {{ total_amount }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="product_id" value="{{ cart_item.product.id }}">
+    <label for="quantity">Quantity:</label>
+    <input type="number" name="quantity" value="{{ quantity }}" min="1">
+    <button type="submit">Add to Cart</button>
+</form>
+
+<a href="{% url 'checkout' %}">Proceed to Checkout</a>
+{% endblock %}

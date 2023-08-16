@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+
+<title>
+    user profile
+</title>
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+{% endblock %}
+{% block body_block %}
+<a href="{% url 'user_profile_edit' %}"><button>Edit_Profile</button></a>
+
+    {% if editing_profile %}
+    <h2>Update Your Profile</h2>
+    <button id="update-details-btn">Edit_Profile</button>
+    <form method="POST" id="Form">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+        <button type="submit">Update Profile</button>
+        <button>Back</button>
+    </form>
+    <a href="{% url 'user_profile' %}">Cancel</a>
+    {% else %}
+    <button id="show-details-btn">Show Your Details</button>
+    <div id="user-details" class="hidden">
+        <p>Username: {{ user_profile.user.username }}</p>
+        <p>Email: {{ user_profile.user.email }}</p>
+        <p>Address: {{ user_profile.address }}</p>
+    </div>
+    <h2>Product Categories</h2>
+    <ul>
+        {% for category in categories %}
+        <li><a href="{% url 'product_list_category' category.id %}">{{ category.name }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("show-details-btn").addEventListener("click", function () {
+                var userDetails = document.getElementById("user-details");
+                userDetails.classList.toggle("hidden", !userDetails.classList.contains("hidden"));
+            });
+
+            document.getElementById("show-categories-btn").addEventListener("click", function () {
+                var categoryList = document.getElementById("category-list");
+                categoryList.classList.toggle("hidden", !categoryList.classList.contains("hidden"));
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const button = document.getElementById("update-details-btn");
+            const form = document.getElementById("Form");
+        
+            button.addEventListener("click", function() {
+                form.classList.toggle("hidden");
+            });
+        });
+    </script>
+    {% endblock %}

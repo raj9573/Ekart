@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}E-Commerce App{% endblock %}</title>
+  </head>
+  <body>
+    <header>
+      <h1>E-Commerce App</h1>
+    </header>
+    <div class="content">
+      {% if user.is_authenticated %}
+      <p>
+        Welcome, {{ user.username }}!
+        <a href="{% url 'user_profile' %}">Profile</a>
+        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'cart' %}">Cart</a>
+        <a href="{% url 'myorders' %}">My orders</a>
+      </p>
+      {% else %}
+      <p>
+        <a href="{% url 'user_loggedin' %}">Login</a> |
+        <a href="{% url 'registration' %}">Register</a>
+      </p>
+      {% endif %} {% block body_block %} {% endblock %}
+    </div>
+    <footer>
+      <p>&copy; 2023 E-Commerce App</p>
+    </footer>
+  </body>
+</html> 

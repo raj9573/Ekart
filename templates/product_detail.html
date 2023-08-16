@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Product details</title>
+
+<style>
+    img
+    {
+        height: 100px;
+        width: 100px;
+    }
+</style>
+{% endblock %}
+{% block body_block %}
+<h2>{{ product.name }}</h2>
+<img src="{{ product.image.url }}" alt="{{ product.name }}">
+<p>Price: {{ product.price }}</p>
+<p>Description: {{ product.description }}</p>
+
+<h3>Reviews</h3>
+<ul>
+    {% for review in reviews %}
+        <li>
+            <p>{{ review.text }}</p>
+            <p>By: {{ review.user.username }} on {{ review.created_at }}</p>
+        </li>
+    {% endfor %}
+</ul>
+
+<h3>Add a Review</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Review</button>
+</form>
+{% endblock %}
